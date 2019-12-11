@@ -5,14 +5,13 @@ export default class SearchPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchTerm : '',
-      data       : []
+      searchTerm: '',
+      data: []
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.search = this.search.bind(this)
   }
-
 
   handleChange(event) {
     this.setState({ searchTerm: event.target.value })
@@ -30,7 +29,7 @@ export default class SearchPage extends Component {
       return (
         <div>
           <Link
-            to='/repo'
+            to="/repo"
             onClick={() => {
               this.props.handleRepo(item.name, item.commits_url.slice(0, -6))
             }}
@@ -42,16 +41,16 @@ export default class SearchPage extends Component {
     })
 
     return (
-      <div>
-        <h1>search</h1>
+      <div className="container center">
+        <h1 className="header">Github users repo search</h1>
         <form onSubmit={this.search}>
-          <label>
-            Search:
-            <input type='text' value={this.state.searchTerm} onChange={this.handleChange} />
-          </label>
-          <input type='submit' value='Submit' />
+          
+          <br />
+          <input className="input" type="text" value={this.state.searchTerm} onChange={this.handleChange} />
+          <br />
+          <input className="button" type="submit" value="Search" />
         </form>
-        <div className='repoList'>{repoList}</div>
+        <div className="repoList">{repoList}</div>
       </div>
     )
   }

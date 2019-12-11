@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import SearchPage from './components/searchPage'
-import RepositoryPage from './components/repositoryPage'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import SearchPage from './components/SearchPage'
+import RepositoryPage from './components/RepositoryPage'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      repoName    : '',
-      commits_url : '',
-      page        : true
+      repoName: '',
+      commits_url: '',
+      page: true
     }
     this.handleRepo = this.handleRepo.bind(this)
     //this.setThePage = this.setThePage.bind(this)
@@ -31,21 +31,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className='App'>
-        <Router>
-          <div className='mainBody'>
-            <Switch>
-              <Route
-                path='/repo'
-                render={(props) => (
-                  <RepositoryPage {...props} repoName={this.state.repoName} commits={this.state.commits_url} />
-                )}
-              />
-              <Route path='/' render={(props) => <SearchPage {...props} handleRepo={this.handleRepo} />} />
-            </Switch>
-          </div>
-        </Router>
-      </div>
+      <Router>
+        <div className="mainBody center">
+          <Switch>
+            <Route
+              path="/repo"
+              render={(props) => (
+                <RepositoryPage {...props} repoName={this.state.repoName} commits={this.state.commits_url} />
+              )}
+            />
+            <Route path="/" render={(props) => <SearchPage {...props} handleRepo={this.handleRepo} />} />
+          </Switch>
+        </div>
+      </Router>
     )
   }
 }
