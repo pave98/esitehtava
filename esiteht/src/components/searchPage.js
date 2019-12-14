@@ -18,34 +18,45 @@ export default class SearchPage extends Component {
   }
 
   search(event) {
-    fetch('https://api.github.com/users/' + this.state.searchTerm + '/repos')
-      .then((response) => response.json())
-      .then((response) => this.setState({ data: response }))
+    if (this.state.searchTerm) {
+      fetch('https://api.github.com/users/' + this.state.searchTerm + '/repos?type=all?sort=full_name')
+        .then((response) => response.json())
+        .then((response) => {
+          this.setState({ data: response })
+        })
+    } else {
+      this.setState({
+        data: { name: 'please enter a search term' }
+      })
+    }
+
     event.preventDefault()
   }
 
   render() {
-    let repoList = this.state.data.map((item) => {
-      return (
-        <div>
+    let repoList = []
+    if (this.state.data.length > 0) {
+      repoList = this.state.data.map((item) => {
+        return (
           <Link
             to="/repo"
+            key={item.name}
             onClick={() => {
               this.props.handleRepo(item.name, item.commits_url.slice(0, -6))
             }}
           >
-            {item.name}
+            <div className="repoContainer">
+              <p>{item.name}</p>
+            </div>
           </Link>
-        </div>
-      )
-    })
+        )
+      })
+    }
 
     return (
       <div className="container center">
         <h1 className="header">Github users repo search</h1>
         <form onSubmit={this.search}>
-          
-          <br />
           <input className="input" type="text" value={this.state.searchTerm} onChange={this.handleChange} />
           <br />
           <input className="button" type="submit" value="Search" />

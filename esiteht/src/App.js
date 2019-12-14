@@ -26,7 +26,6 @@ class App extends Component {
   handleRepo(repoName, commits_url) {
     this.setState({ repoName: repoName, page: !this.state.page, commits_url: commits_url })
 
-    console.log(repoName)
   }
 
   render() {
