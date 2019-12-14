@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import SearchPage from './components/SearchPage'
 import RepositoryPage from './components/RepositoryPage'
 
@@ -7,25 +7,32 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      searchTerm: '',
+      data: [],
       repoName: '',
       commits_url: '',
       page: true
     }
+    this.checkIfEmpty = this.checkIfEmpty.bind(this)
     this.handleRepo = this.handleRepo.bind(this)
-    //this.setThePage = this.setThePage.bind(this)
   }
 
-  /*  setThePage() {
-    if (this.state.page === true) {
-      return <SearchPage handleRepo={this.handleRepo} />
-    } else if (this.state.page === false) {
-      return <RepositoryPage repoName={this.state.repoName} commits={this.state.commits_url} />
+  checkIfEmpty() {
+    if (this.state.repoName === '') {
+      return false
+    } else {
+      return true
     }
-  }*/
+  }
 
-  handleRepo(repoName, commits_url) {
-    this.setState({ repoName: repoName, page: !this.state.page, commits_url: commits_url })
-
+  handleRepo(searchTerm, data, repoName, commits_url) {
+    this.setState({
+      searchTerm: searchTerm,
+      data: data,
+      repoName: repoName,
+      page: !this.state.page,
+      commits_url: commits_url
+    })
   }
 
   render() {
@@ -35,11 +42,25 @@ class App extends Component {
           <Switch>
             <Route
               path="/repo"
+              render={(props) => {
+                if (this.checkIfEmpty()) {
+                  return <RepositoryPage {...props} repoName={this.state.repoName} commits={this.state.commits_url} />
+                } else {
+                  return <Redirect to="/" />
+                }
+              }}
+            />
+            <Route
+              path="/"
               render={(props) => (
-                <RepositoryPage {...props} repoName={this.state.repoName} commits={this.state.commits_url} />
+                <SearchPage
+                  {...props}
+                  searchTerm={this.state.searchTerm}
+                  data={this.state.data}
+                  handleRepo={this.handleRepo}
+                />
               )}
             />
-            <Route path="/" render={(props) => <SearchPage {...props} handleRepo={this.handleRepo} />} />
           </Switch>
         </div>
       </Router>

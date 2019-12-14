@@ -5,12 +5,16 @@ export default class SearchPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchTerm: '',
-      data: []
+      searchTerm: this.props.searchTerm,
+      data: this.props.data
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.search = this.search.bind(this)
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, 0)
   }
 
   handleChange(event) {
@@ -18,17 +22,11 @@ export default class SearchPage extends Component {
   }
 
   search(event) {
-    if (this.state.searchTerm) {
-      fetch('https://api.github.com/users/' + this.state.searchTerm + '/repos?type=all?sort=full_name')
-        .then((response) => response.json())
-        .then((response) => {
-          this.setState({ data: response })
-        })
-    } else {
-      this.setState({
-        data: { name: 'please enter a search term' }
+    fetch('https://api.github.com/users/' + this.state.searchTerm + '/repos?type=all?sort=full_name')
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({ data: response })
       })
-    }
 
     event.preventDefault()
   }
@@ -42,7 +40,7 @@ export default class SearchPage extends Component {
             to="/repo"
             key={item.name}
             onClick={() => {
-              this.props.handleRepo(item.name, item.commits_url.slice(0, -6))
+              this.props.handleRepo(this.state.searchTerm, this.state.data, item.name, item.commits_url.slice(0, -6))
             }}
           >
             <div className="repoContainer">

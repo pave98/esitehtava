@@ -82,6 +82,11 @@ body {
 }
 
 .commitListItem {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  grid-template-areas: "avatar commitDetails";
+  height: auto;
   width: 50%;
   margin: 10px auto;
   background: linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
@@ -90,4 +95,34 @@ body {
   border-radius: 6px;
   color: #ffffff;
   padding: 6px 24px;
+}
+
+.avatarImage {
+  max-height: 100%;
+  max-width: auto;
+}
+
+.avatarContainer {
+  grid-area: avatar;
+}
+
+.itemContainer {
+  grid-area: commitDetails;
+}
+
+.repoPageHeader {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: auto;
+  grid-template-areas: "button header";
+}
+
+.backButton {
+  grid-area: button;
+  width: fit-content;
+  margin: auto;
+}
+
+.repoHeader {
+  grid-area: header;
 }
