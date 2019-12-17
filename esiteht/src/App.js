@@ -11,12 +11,12 @@ class App extends Component {
       data: [],
       repoName: '',
       commits_url: '',
-      page: true
     }
     this.checkIfEmpty = this.checkIfEmpty.bind(this)
     this.handleRepo = this.handleRepo.bind(this)
   }
 
+  //Checks if a search has been made before allowing entry to the /repo site
   checkIfEmpty() {
     if (this.state.repoName === '') {
       return false
@@ -25,12 +25,12 @@ class App extends Component {
     }
   }
 
+  //saves the data from the search page that is used in the repository page.
   handleRepo(searchTerm, data, repoName, commits_url) {
     this.setState({
       searchTerm: searchTerm,
       data: data,
       repoName: repoName,
-      page: !this.state.page,
       commits_url: commits_url
     })
   }

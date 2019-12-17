@@ -37,8 +37,8 @@ export default class RepositoryPage extends Component {
         date.getMinutes()
 
       let avatar
-      if (item.author != undefined) {
-        if (item.author.avatar_url != undefined) {
+      if (item.author !== null) {
+        if (item.author.avatar_url !== null) {
           avatar = <img className="avatarImage" src={item.author.avatar_url} alt="avatar" />
         }
       }
@@ -65,7 +65,7 @@ export default class RepositoryPage extends Component {
               window.history.back()
             }}
           >
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FontAwesomeIcon className="arrow" icon={faArrowLeft} size="3x" />
           </div>
           <div className="repoHeader">
             <h1 className="header center">{this.props.repoName} - commits</h1>

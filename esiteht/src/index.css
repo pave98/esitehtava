@@ -14,10 +14,20 @@ body {
 
 .header {
   color: white;
+  padding-top: 100px;
+  padding-bottom: 20px;
 }
 
 .container {
   text-align: center;
+}
+
+form {
+  padding: 20px 0 50px 0;
+}
+
+.arrow {
+  color: white;
 }
 
 .input {
@@ -125,4 +135,12 @@ body {
 
 .repoHeader {
   grid-area: header;
+}
+
+@media only screen and (max-width: 768px) {
+  .avatarImage {
+    margin-top: 10px;
+    max-height: 50px;
+    max-width: auto;
+  }
 }
