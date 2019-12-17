@@ -13,14 +13,17 @@ export default class SearchPage extends Component {
     this.search = this.search.bind(this)
   }
 
+  //Sets the screen to top of the page
   componentDidMount() {
     window.scrollTo(0, 0)
   }
 
+  //Handles the changes in the search form.
   handleChange(event) {
     this.setState({ searchTerm: event.target.value })
   }
 
+  //Makes a get request to the github api to get the users repositories.
   search(event) {
     fetch('https://api.github.com/users/' + this.state.searchTerm + '/repos?type=all?sort=full_name')
       .then((response) => response.json())
